@@ -17,4 +17,5 @@ Route::get('/visualizar', 'Controller@visualizar');
 
 // Rest
 Route::post('/addItem', 'Controller@addItem');
+Route::post('removeItem', 'Controller@removeItem');
 Route::get('/getItens', 'Controller@getItens');

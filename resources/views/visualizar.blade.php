@@ -1,9 +1,13 @@
+<?php
+	$imgName = '/uploads/itens-images/' . $_GET['img'];
+?>
 <html >
 	<head>
 		<title>Visualiozação de imagem</title>						
 		
 	</head>
 	<body>		
-		<h1>VISUALIZANDO IMAGEM</h1>
+		<a href="http://phplaravel.test"><button>Voltar</button></a>
+		<img src="{{$imgName}}" alt="Smiley face">
 	</body>
 </html>

@@ -41,7 +41,7 @@ class Controller extends BaseController
 				// Pega a imagem
 				$image = $request->file('image');
 				// gera o nome da imagem.
-				$fileName = time() . '-' . $data['name'] . '.' . $image->getClientOriginalExtension();
+				$fileName = time() . '-' . str_replace(' ', '', $data['name']) . '.' . $image->getClientOriginalExtension();
 
 				$auxImage = Image::make($image->getRealPath());
 				// Redimensiona a imagem para não ficar muito grande
@@ -62,6 +62,17 @@ class Controller extends BaseController
 		}				
 				
 		
+		return $response;
+	}
+	
+	public function removeItem(Request $request) {
+		$response = array();
+		$data = $request->post();
+		if($data['id'] != null && $data['id'] != '') {
+			DB::table('item')->where('id', '=', $data['id'])->delete();			
+		} else {
+			$response['error'] = 1;
+		}
 		return $response;
 	}
 	

@@ -24,7 +24,20 @@
 				};
 				
 				control.removeItem = function(id) {
-					confirm('Tem certeza que deseja excluir o item com ID = '+id);
+					if( confirm('Tem certeza que deseja excluir o item com ID = '+id) ) {
+						$http({
+							url: 'http://phplaravel.test/removeItem',
+							method: 'POST',
+							data: {id: id}
+						}).then(function(response) {
+							if(response.data.error == undefined) {
+								control.refreshData();
+								alert('Item deletado com sucesso');
+							} else {
+								alert('Erro ao deletar o item');
+							}
+						});
+					}
 				};
 				
 				control.refreshData();
