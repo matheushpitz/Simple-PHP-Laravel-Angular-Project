@@ -6,19 +6,29 @@
 		<script>
 			var app = angular.module('indexApp', []);
 			app.controller('indexController', function($scope, $http) {
+				var control = $scope;
 				
-				// Pega os dados do server
-				$http({
-					url: 'http://phplaravel.test/getItens',
-					method: 'GET'
-				}).then(function(response) {
-					$scope.data = response.data;
-				});
+				control.refreshData = function() {
+					// Pega os dados do server
+					$http({
+						url: 'http://phplaravel.test/getItens',
+						method: 'GET'
+					}).then(function(response) {
+						control.data = response.data;
+					});
+				};				
 				
 				// Função para redirecionar.
-				$scope.openPage = function(page) {
+				control.openPage = function(page) {
 					window.location.href = 'http://phplaravel.test/'+page;
 				};
+				
+				control.removeItem = function(id) {
+					confirm('Tem certeza que deseja excluir o item com ID = '+id);
+				};
+				
+				control.refreshData();
+				
 			});
 		</script>
 		
@@ -34,6 +44,8 @@
 				<th>Valor Revenda</th>
 				<th>Ativo</th>
 				<th>Imagem</th>
+				<th>Editar</th>
+				<th>Excluir</th>
 			</tr>
 			<tr ng-repeat="d in data">
 				<td>@{{d.id}}</td>
@@ -43,6 +55,8 @@
 				<td>@{{d.vlRevenda}}</td>
 				<td>@{{d.ativo}}</td>
 				<td><a href = "/visualizar?img=@{{d.imagem}}">Visualizar</a></td>
+				<td><a href="#" ng-click="removeItem(d.id)">Editar</a></td>
+				<td><a href="#" ng-click="removeItem(d.id)">Excluir</a></td>
 			</tr>
 		</table>
 	</body>
