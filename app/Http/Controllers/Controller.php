@@ -16,23 +16,38 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 	
 	// VIEW
+	
+	/**
+		View index
+	**/
 	public function index() {
 		return view('index');
 	}
 	
+	/**
+		View adicionar
+	**/
 	public function adicionar() {
 		return view('adicionar');
 	}
 	
+	/**
+		View visualizar
+	**/
 	public function visualizar() {
 		return view('visualizar');
 	}
 	
 	// REST
-	public function addItem(Request $request) {													
+	
+	/**
+		Responsável pela inserção e atualização dos itens.
+	**/
+	public function insertUpdateItem(Request $request) {													
 		$data = $request->post();				
 		
 		$response = array();
+		// verifica se os dados são nulos.
 		if($data != null) {		
 			// Verifica os parametros
 			if( ($data['name'] != null || $data['name'] === '') && ($data['desc'] != null || $data['desc'] === '') && 
@@ -40,7 +55,7 @@ class Controller extends BaseController
 				($data['ativo'] != null || $data['ativo'] === '') ) {
 					
 				$fileName = '';
-					
+				// Verifica se tem imagem.
 				if($request->hasFile('image')) {
 					// Pega a imagem
 					$image = $request->file('image');
@@ -57,11 +72,15 @@ class Controller extends BaseController
 					// Salva a imagem
 					Storage::disk('uploads')->put('itens-images'.'/'.$fileName, $auxImage, 'public');										
 				} else {
+					// se não tiver pega o nome do arquivo.
 					$fileName = $data['image'];
 				}
-				if($request->has('id')) {					
+				// Verifica se tem id, pois, se tiver isso é um update e não inserção.
+				if($request->has('id')) {	
+					// Atualiza os dados.
 					DB::table('item')->where('id', '=', $data['id'])->update(['nome' => $data['name'], 'descricao' => $data['desc'], 'vlCompra' => $data['vlC'], 'vlRevenda' => $data['vlR'], 'ativo' => $data['ativo'] == 'true' ? 1 : 0, 'imagem' => $fileName]);
 				} else {
+					// Adiciona novos dados.
 					DB::table('item')->insert(['nome' => $data['name'], 'descricao' => $data['desc'], 'vlCompra' => $data['vlC'], 'vlRevenda' => $data['vlR'], 'ativo' => $data['ativo'] == 'true' ? 1 : 0, 'imagem' => $fileName]);
 				}
 			} else {
@@ -75,6 +94,9 @@ class Controller extends BaseController
 		return $response;
 	}
 	
+	/**
+		Responsável pela remoção dos itens.
+	**/
 	public function removeItem(Request $request) {
 		$response = array();
 		$data = $request->post();
@@ -86,6 +108,9 @@ class Controller extends BaseController
 		return $response;
 	}
 	
+	/**
+		Responsável pelo retorno dos itens no Banco de dados.
+	**/
 	public function getItens(Request $request) {
 		// Filtros
 		$id = $request->get('id');	
@@ -120,7 +145,7 @@ class Controller extends BaseController
 		if($ativo != null && $ativo != '')
 			array_push($sqlWhere, ['ativo', '=', ($ativo == 'true' ? 1 : 0)]);
 		
-		
+		// select.
 		return DB::table('item')->where($sqlWhere)->get();		
 	}
 }

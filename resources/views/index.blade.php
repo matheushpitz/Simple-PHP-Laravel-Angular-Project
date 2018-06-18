@@ -4,74 +4,11 @@
 		<title>Laravel project</title>
 		<script src="{{ asset('js/angular.min.js') }}"></script>
 		<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+		<script src="{{ asset('js/index-app.js') }}"></script>
+		<script src="{{ asset('js/jsUtils.js') }}"></script>
+		
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
-		<link rel="stylesheet" type="text/css" href="{{ asset('css/css-index.css') }}">
-		
-		<script>
-			var app = angular.module('indexApp', []);
-			app.controller('indexController', function($scope, $http) {
-				var control = $scope;
-				
-				control.refreshData = function() {
-					// Pega os dados do server
-					$http({
-						url: '/getItens',
-							
-						method: 'GET',
-						params: {
-							name: control.filtroNome,
-							minVlC: control.filtroMinVlC,
-							maxVlC: control.filtroMaxVlC,
-							minVlR: control.filtroMinVlR,
-							maxVlR: control.filtroMaxVlR,
-							ativo: control.filtroAtivo
-						}
-					}).then(function(response) {
-						control.data = response.data;
-					});
-				};				
-				
-				// Função para redirecionar.
-				control.openPage = function(page) {					
-					window.location.href = '/'+page;
-				};
-				
-				control.removeItem = function(id) {
-					if( confirm('Tem certeza que deseja excluir o item com ID = '+id) ) {
-						$http({
-							url: '/removeItem',
-							method: 'POST',
-							data: {id: id}
-						}).then(function(response) {
-							if(response.data.error == undefined) {
-								control.refreshData();
-								alert('Item deletado com sucesso');
-							} else {
-								alert('Erro ao deletar o item');
-							}
-						});
-					}
-				};
-				
-				control.editItem = function(id) {					
-					control.openPage('adicionar?id='+id);
-				};
-				
-				control.initFiltro = function() {
-					control.filtroNome = '';
-					control.filtroMinVlC = '';
-					control.filtroMaxVlC = '';
-					control.filtroMinVlR = '';
-					control.filtroMaxVlR = '';
-					control.filtroAtivo = '';
-				};
-				
-				control.initFiltro();
-				control.refreshData();				
-				
-			});
-		</script>
-		
+		<link rel="stylesheet" type="text/css" href="{{ asset('css/css-index.css') }}">						
 	</head>
 	<body>
 		<div class="col-12">							
@@ -82,13 +19,13 @@
 				</div>
 				<div class="row">
 					<label for="vlCompra">Valor compra</label>
-					<input type="text" placeholder="Min. Ex: 123.45" name="vlCompra" class="form-control" ng-model="filtroMinVlC" />
-					<input type="text" placeholder="Max. Ex: 123.45" class="form-control" ng-model="filtroMaxVlC" />
+					<input type="text" onkeypress="onlyNumbers(event)" placeholder="Min. Ex: 123.45" name="vlCompra" class="form-control" ng-model="filtroMinVlC" />
+					<input type="text" onkeypress="onlyNumbers(event)" placeholder="Max. Ex: 123.45" class="form-control" ng-model="filtroMaxVlC" />
 				</div>
 				<div class="row">
 					<label for="vlRevenda">Valor revenda</label>
-					<input type="text" placeholder="Min. Ex: 123.45" name="vlRevenda" class="form-control" ng-model="filtroMinVlR" />
-					<input type="text" placeholder="Max. Ex: 123.45" class="form-control" ng-model="filtroMaxVlR" />
+					<input type="text" onkeypress="onlyNumbers(event)" placeholder="Min. Ex: 123.45" name="vlRevenda" class="form-control" ng-model="filtroMinVlR" />
+					<input type="text" onkeypress="onlyNumbers(event)" placeholder="Max. Ex: 123.45" class="form-control" ng-model="filtroMaxVlR" />
 				</div>
 				<div class="row">
 					<input type="checkbox" ng-model="filtroAtivo" /> <span class="ativo-span">Ativo</span>

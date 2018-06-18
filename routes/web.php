@@ -16,6 +16,6 @@ Route::get('/adicionar', 'Controller@adicionar');
 Route::get('/visualizar', 'Controller@visualizar');
 
 // Rest
-Route::post('/addItem', 'Controller@addItem');
+Route::post('/insertUpdateItem', 'Controller@insertUpdateItem');
 Route::post('removeItem', 'Controller@removeItem');
 Route::get('/getItens', 'Controller@getItens');
