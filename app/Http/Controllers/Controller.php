@@ -89,12 +89,12 @@ class Controller extends BaseController
 	public function getItens(Request $request) {
 		// Filtros
 		$id = $request->get('id');	
-		$nome = $request->('name');
-		$minVlC = $request->('minVlC');
-		$maxVlC = $request->('maxVlC');
-		$minVlR = $request->('minVlR');
-		$maxVlR = $request->('maxVlR');
-		$ativo = $request->('ativo');
+		$nome = $request->get('name');
+		$minVlC = $request->get('minVlC');
+		$maxVlC = $request->get('maxVlC');
+		$minVlR = $request->get('minVlR');
+		$maxVlR = $request->get('maxVlR');
+		$ativo = $request->get('ativo');			
 		
 		$sqlWhere = array();
 		
@@ -102,23 +102,23 @@ class Controller extends BaseController
 		if($id != null && $id != '')
 			array_push($sqlWhere, ['id', '=', $id]);
 		
-		if($nome != null $$ $name != '')
+		if($nome != null && $nome != '')
 			array_push($sqlWhere, ['nome', 'like', '%'.$nome.'%']);
 		
-		if($minVlC != null $$ $minVlC != '')
+		if($minVlC != null && $minVlC != '')
 			array_push($sqlWhere, ['vlCompra', '>=', $minVlC]);
 		
-		if($maxVlC != null $$ $maxVlC != '')
+		if($maxVlC != null && $maxVlC != '')
 			array_push($sqlWhere, ['vlCompra', '<=', $maxVlC]);
 		
-		if($minVlR != null $$ $minVlR != '')
+		if($minVlR != null && $minVlR != '')
 			array_push($sqlWhere, ['vlRevenda', '>=', $minVlR]);
 		
-		if($maxVlR != null $$ $maxVlR != '')
+		if($maxVlR != null && $maxVlR != '')
 			array_push($sqlWhere, ['vlRevenda', '<=', $maxVlR]);
 		
-		if($ativo != null)
-			array_push($sqlWhere, ['ativo', '=', $ativo]);
+		if($ativo != null && $ativo != '')
+			array_push($sqlWhere, ['ativo', '=', ($ativo == 'true' ? 1 : 0)]);
 		
 		
 		return DB::table('item')->where($sqlWhere)->get();		

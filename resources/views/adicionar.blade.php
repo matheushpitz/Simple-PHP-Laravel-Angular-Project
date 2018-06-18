@@ -2,6 +2,9 @@
 	<head>
 		<title>Adicionar Item</title>
 		<script src="{{ asset('js/angular.min.js') }}"></script>
+		<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+		<link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ asset('css/css-adicionar.css') }}">
 		
 		<script>
 			function getAllUrlParams(url) {
@@ -133,7 +136,7 @@
 					if(control.isUpdating == true)
 						data.append('id', urlParam['id']);
 					$http({
-						url: 'http://phplaravel.test/addItem',
+						url: '/addItem',
 						method: 'POST',
 						data: data,
 						headers: {'Content-Type': undefined }
@@ -160,7 +163,7 @@
 					control.isUpdating = true;
 					control.btnText = 'Atualizar';
 					$http({
-						url: 'http://phplaravel.test/getItens?id='+urlParam['id'],
+						url: '/getItens?id='+urlParam['id'],
 						method: 'GET'
 					}).then(function(response) {
 						var data = response.data[0];
@@ -173,15 +176,33 @@
 		
 	</head>
 	<body>		
-		<form class="form-inline" name="formItem">
-			Nome: <input type="text" name="nome" ng-model="nome"/>
-			Descrição: <textarea ng-model="descricao" name="descricao"></textarea>
-			Valor de compra: <input type="text" name="vlCompra" ng-model="vlCompra"/>
-			Valor de revenda: <input type="text" name="vlRevenda" ng-model="vlRevenda"/>
-			<input type="checkbox" ng-model="ativo" name="ativo"/> Ativo
-			Imagem: <input type="file" name="image" onchange="angular.element(this).scope().getImageFile(this)" accept="image/*">			
-			<button ng-click="adicionaItem()">@{{btnText}}</button>
-			<button ng-click="backToIndex()">Voltar</button>
-		</form>
+		<div class="col-6">			
+			<div class="form-group col-6">
+				<div class="row">
+					Nome: <input type="text" class="form-control" name="nome" ng-model="nome"/>
+				</div>
+				<div class="row">
+					Descrição: <textarea class="form-control" ng-model="descricao" name="descricao"></textarea>
+				</div>
+				<div class="row">
+					Valor de compra: <input type="text" class="form-control" name="vlCompra" ng-model="vlCompra"/>
+				</div>
+				<div class="row">
+					Valor de revenda: <input type="text" class="form-control" name="vlRevenda" ng-model="vlRevenda"/>
+				</div>
+				<div class="row">
+					<input type="checkbox" ng-model="ativo" name="ativo"/> <span> Ativo</span>
+				</div>
+				<div class="row">
+					Imagem: <input type="file" class="form-control" name="image" onchange="angular.element(this).scope().getImageFile(this)" accept="image/*">			
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="row">
+					<button class="btn btn-primary" ng-click="adicionaItem()">@{{btnText}}</button>
+					<button class="btn btn-secondary" ng-click="backToIndex()">Voltar</button>		
+				</div>
+			</div>
+		</div>
 	</body>
 </html>
