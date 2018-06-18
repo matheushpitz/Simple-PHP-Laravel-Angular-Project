@@ -37,23 +37,33 @@ class Controller extends BaseController
 			// Verifica os parametros
 			if( ($data['name'] != null || $data['name'] === '') && ($data['desc'] != null || $data['desc'] === '') && 
 				($data['vlC'] != null || $data['vlC'] === '') && ($data['vlR'] != null || $data['vlR'] === '') && 
-				($data['ativo'] != null || $data['ativo'] === '') && ($request->hasFile('image')) ) {
-				// Pega a imagem
-				$image = $request->file('image');
-				// gera o nome da imagem.
-				$fileName = time() . '-' . str_replace(' ', '', $data['name']) . '.' . $image->getClientOriginalExtension();
+				($data['ativo'] != null || $data['ativo'] === '') ) {
+					
+				$fileName = '';
+					
+				if($request->hasFile('image')) {
+					// Pega a imagem
+					$image = $request->file('image');
+					// gera o nome da imagem.
+					$fileName = time() . '-' . str_replace(' ', '', $data['name']) . '.' . $image->getClientOriginalExtension();
 
-				$auxImage = Image::make($image->getRealPath());
-				// Redimensiona a imagem para não ficar muito grande
-				$auxImage->resize(512, 512, function ($constraint) {
-					$constraint->aspectRatio();                 
-				});
-				// Chama o método stream.
-				$auxImage->stream();
-				// Salva a imagem
-				Storage::disk('uploads')->put('itens-images'.'/'.$fileName, $auxImage, 'public');
-				
-				DB::table('item')->insert(['nome' => $data['name'], 'descricao' => $data['desc'], 'vlCompra' => $data['vlC'], 'vlRevenda' => $data['vlR'], 'ativo' => $data['ativo'] == 'true' ? 1 : 0, 'imagem' => $fileName]);
+					$auxImage = Image::make($image->getRealPath());
+					// Redimensiona a imagem para não ficar muito grande
+					$auxImage->resize(512, 512, function ($constraint) {
+						$constraint->aspectRatio();                 
+					});
+					// Chama o método stream.
+					$auxImage->stream();
+					// Salva a imagem
+					Storage::disk('uploads')->put('itens-images'.'/'.$fileName, $auxImage, 'public');										
+				} else {
+					$fileName = $data['image'];
+				}
+				if($request->has('id')) {					
+					DB::table('item')->where('id', '=', $data['id'])->update(['nome' => $data['name'], 'descricao' => $data['desc'], 'vlCompra' => $data['vlC'], 'vlRevenda' => $data['vlR'], 'ativo' => $data['ativo'] == 'true' ? 1 : 0, 'imagem' => $fileName]);
+				} else {
+					DB::table('item')->insert(['nome' => $data['name'], 'descricao' => $data['desc'], 'vlCompra' => $data['vlC'], 'vlRevenda' => $data['vlR'], 'ativo' => $data['ativo'] == 'true' ? 1 : 0, 'imagem' => $fileName]);
+				}
 			} else {
 				$response['error'] = 1;
 			}
@@ -76,7 +86,41 @@ class Controller extends BaseController
 		return $response;
 	}
 	
-	public function getItens() {
-		return DB::table('item')->get();
+	public function getItens(Request $request) {
+		// Filtros
+		$id = $request->get('id');	
+		$nome = $request->('name');
+		$minVlC = $request->('minVlC');
+		$maxVlC = $request->('maxVlC');
+		$minVlR = $request->('minVlR');
+		$maxVlR = $request->('maxVlR');
+		$ativo = $request->('ativo');
+		
+		$sqlWhere = array();
+		
+		// Verifica os filtros
+		if($id != null && $id != '')
+			array_push($sqlWhere, ['id', '=', $id]);
+		
+		if($nome != null $$ $name != '')
+			array_push($sqlWhere, ['nome', 'like', '%'.$nome.'%']);
+		
+		if($minVlC != null $$ $minVlC != '')
+			array_push($sqlWhere, ['vlCompra', '>=', $minVlC]);
+		
+		if($maxVlC != null $$ $maxVlC != '')
+			array_push($sqlWhere, ['vlCompra', '<=', $maxVlC]);
+		
+		if($minVlR != null $$ $minVlR != '')
+			array_push($sqlWhere, ['vlRevenda', '>=', $minVlR]);
+		
+		if($maxVlR != null $$ $maxVlR != '')
+			array_push($sqlWhere, ['vlRevenda', '<=', $maxVlR]);
+		
+		if($ativo != null)
+			array_push($sqlWhere, ['ativo', '=', $ativo]);
+		
+		
+		return DB::table('item')->where($sqlWhere)->get();		
 	}
 }

@@ -19,7 +19,7 @@
 				};				
 				
 				// Função para redirecionar.
-				control.openPage = function(page) {
+				control.openPage = function(page) {					
 					window.location.href = 'http://phplaravel.test/'+page;
 				};
 				
@@ -38,6 +38,10 @@
 							}
 						});
 					}
+				};
+				
+				control.editItem = function(id) {					
+					control.openPage('adicionar?id='+id);
 				};
 				
 				control.refreshData();
@@ -68,7 +72,7 @@
 				<td>@{{d.vlRevenda}}</td>
 				<td>@{{d.ativo}}</td>
 				<td><a href = "/visualizar?img=@{{d.imagem}}">Visualizar</a></td>
-				<td><a href="#" ng-click="removeItem(d.id)">Editar</a></td>
+				<td><a href="#" ng-click="editItem(d.id)">Editar</a></td>
 				<td><a href="#" ng-click="removeItem(d.id)">Excluir</a></td>
 			</tr>
 		</table>

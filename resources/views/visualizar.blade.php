@@ -1,5 +1,5 @@
 <?php
-	$imgName = '/uploads/itens-images/' . $_GET['img'];
+	$imgName = asset('/uploads/itens-images/' . $_GET['img']);
 ?>
 <html >
 	<head>
