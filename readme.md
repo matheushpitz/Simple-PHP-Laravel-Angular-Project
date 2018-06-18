@@ -31,3 +31,4 @@ create database laraveldb;
 - 12° Abra o CMD do Windows e acesse a pasta do projeto.
 - 13° Digite o comando "php artisan migrate".
 - 13° Esse comando ira adicionar as tabelas necessárias para o projeto."
+- 14° Digite no navegador o link **phplaravel.test**, pronto!!!
