@@ -7,7 +7,7 @@
 <p>3° Coloque o projeto dentro da pasta htdocs do XAMPP</p>
 <p>4° Na raiz do XAMPP acesse apache/conf/extra e abra o arquivo httpd-vhosts.conf</p>
 <p>5° Adicione o comando abaixo no fim do arquivo:</p>
-<span>
+<p>
 <VirtualHost *:80>
 	ServerName phplaravel.test
 	DocumentRoot "<DIRETORIO DO XAMPP>\htdocs\Simple-PHP-Laravel-Angular-Project\public"
@@ -15,7 +15,7 @@
 		AllowOverride all
 	</Directory>
 </VirtualHost>
-</span>
+</p>
 <p>6° Feito isso acesse a pasta windows/System32/drivers/etc e abra o arquivo hosts</p>
 <p>7° Adicione o comando abaixo no fim do arquivo:</p>
 127.0.0.1 phplaravel.test
