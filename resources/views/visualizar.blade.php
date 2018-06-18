@@ -1,6 +1,7 @@
 <?php
 	$imgName = asset('/uploads/itens-images/' . $_GET['img']);
 ?>
+<!DOCTYPE html>
 <html >
 	<head>
 		<title>Visualiozação de imagem</title>
@@ -10,7 +11,13 @@
 		
 	</head>
 	<body>		
-		<a href="/"><button>Voltar</button></a>
-		<img src="{{$imgName}}" alt="Smiley face">
+		<div class="col-12">
+			<div class="row">
+				<img src="{{$imgName}}" alt="Smiley face">
+			</div>
+			<div class="row">
+				<a href="/"><button class="btn btn-secondary btn-back">Voltar</button></a>
+			</div>
+		</div>
 	</body>
 </html>

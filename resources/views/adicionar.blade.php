@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html ng-app="addApp" ng-controller="addController">
 	<head>
 		<title>Adicionar Item</title>
@@ -177,30 +178,35 @@
 	</head>
 	<body>		
 		<div class="col-6">			
-			<div class="form-group col-6">
+			<div class="form-group col-4">
 				<div class="row">
-					Nome: <input type="text" class="form-control" name="nome" ng-model="nome"/>
+					<label for="nome">Nome</label>
+					<input type="text" placeholder="Nome" class="form-control" name="nome" ng-model="nome"/>
 				</div>
 				<div class="row">
-					Descrição: <textarea class="form-control" ng-model="descricao" name="descricao"></textarea>
+					<label for="descricao">Descrição</label>
+					<textarea class="form-control" placeholder="Descrição" ng-model="descricao" name="descricao"></textarea>
 				</div>
 				<div class="row">
-					Valor de compra: <input type="text" class="form-control" name="vlCompra" ng-model="vlCompra"/>
+					<label for="vlCompra">Valor de compra</label>
+					<input type="text" placeholder="Valor de compra. Ex: 123.45" class="form-control" name="vlCompra" ng-model="vlCompra"/>
 				</div>
 				<div class="row">
-					Valor de revenda: <input type="text" class="form-control" name="vlRevenda" ng-model="vlRevenda"/>
+					<label for="vlRevenda">Valor de revenda</label>
+					<input type="text" placeholder="Valor de revenda. Ex: 123.45" class="form-control" name="vlRevenda" ng-model="vlRevenda"/>
+				</div>				
+				<div class="row">
+					<label for="image">Imagem</label>
+					<input type="file" class="form-control" name="image" onchange="angular.element(this).scope().getImageFile(this)" accept="image/*">			
 				</div>
 				<div class="row">
-					<input type="checkbox" ng-model="ativo" name="ativo"/> <span> Ativo</span>
-				</div>
-				<div class="row">
-					Imagem: <input type="file" class="form-control" name="image" onchange="angular.element(this).scope().getImageFile(this)" accept="image/*">			
+					<input type="checkbox" ng-model="ativo" name="ativo"/> <span class="ativo-span"> Ativo</span>
 				</div>
 			</div>
-			<div class="col-6">
+			<div class="col-4">
 				<div class="row">
-					<button class="btn btn-primary" ng-click="adicionaItem()">@{{btnText}}</button>
-					<button class="btn btn-secondary" ng-click="backToIndex()">Voltar</button>		
+					<button class="btn btn-primary btn-add" ng-click="adicionaItem()">@{{btnText}}</button>
+					<button class="btn btn-secondary btn-back" ng-click="backToIndex()">Voltar</button>		
 				</div>
 			</div>
 		</div>

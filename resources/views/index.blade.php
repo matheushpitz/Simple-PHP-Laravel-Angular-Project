@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html ng-app="indexApp" ng-controller="indexController">
 	<head>
 		<title>Laravel project</title>
@@ -73,29 +74,33 @@
 		
 	</head>
 	<body>
-		<div class="col-12">
-			<div class="col-3">
+		<div class="col-12">							
+			<div class="col-2 form-group">								
 				<div class="row">
-					<button class="btn btn-primary" ng-click = "openPage('adicionar')">Adicionar Item</button>
-				</div>
-			</div>
-			
-			<div class="col-6">
-				<div class="row">
-					Nome: <input type="text" ng-model="filtroNome" />
+					<label for="nome">Nome</label>
+					<input type="text" placeholder="Nome" name="nome" class="form-control" ng-model="filtroNome" />
 				</div>
 				<div class="row">
-					Valor Compra: <input type="text" ng-model="filtroMinVlC" /> <input type="text" ng-model="filtroMaxVlC" />
+					<label for="vlCompra">Valor compra</label>
+					<input type="text" placeholder="Min. Ex: 123.45" name="vlCompra" class="form-control" ng-model="filtroMinVlC" />
+					<input type="text" placeholder="Max. Ex: 123.45" class="form-control" ng-model="filtroMaxVlC" />
 				</div>
 				<div class="row">
-					Valor Revenda: <input type="text" ng-model="filtroMinVlR" /> <input type="text" ng-model="filtroMaxVlR" />
+					<label for="vlRevenda">Valor revenda</label>
+					<input type="text" placeholder="Min. Ex: 123.45" name="vlRevenda" class="form-control" ng-model="filtroMinVlR" />
+					<input type="text" placeholder="Max. Ex: 123.45" class="form-control" ng-model="filtroMaxVlR" />
 				</div>
 				<div class="row">
-					<input type="checkbox" ng-model="filtroAtivo" /> Ativo
+					<input type="checkbox" ng-model="filtroAtivo" /> <span class="ativo-span">Ativo</span>
 				</div>
 				<div class="row">
 					<button class="btn btn-secondary" ng-click="refreshData()">Filtrar</button>
 				</div>			
+			</div>
+			<div class="col-3">
+				<div class="row">
+					<button class="btn btn-primary" ng-click = "openPage('adicionar')">Adicionar Item</button>
+				</div>
 			</div>
 			
 			<div class="col-12">
