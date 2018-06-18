@@ -9,8 +9,8 @@
 <p>5° Adicione o comando abaixo no fim do arquivo:</p>
 <VirtualHost *:80>
 	ServerName phplaravel.test
-	DocumentRoot "<DIRETORIO DO XAMPP>\htdocs\Simple-PHP-Laravel-Angular-Project\public"
-	<Directory "<DIRETORIO DO XAMPP>\htdocs\Simple-PHP-Laravel-Angular-Project\public">
+	DocumentRoot "DIRETORIO DO XAMPP\htdocs\Simple-PHP-Laravel-Angular-Project\public"
+	<Directory "DIRETORIO DO XAMPP\htdocs\Simple-PHP-Laravel-Angular-Project\public">
 		AllowOverride all
 	</Directory>
 </VirtualHost>
