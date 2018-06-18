@@ -46,6 +46,6 @@ function getAllUrlParams(url) {
 // Função que faz com que só sejam aceitos numeros, pontos e virgulas.
 function onlyNumbers(e) {	
 	var key = e.keyCode || e.which;	
-	if( !( (key > 47 && key < 58) || key == 46 || key == 44 || key == 8 || key == 9) )
+	if( !( (key > 47 && key < 58) || key == 46 || key == 8 || key == 9) )
 		e.preventDefault();
 }
